@@ -16,6 +16,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_VIEW_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_VIEW_MODE;
 import static seedu.address.logic.parser.ParserUtil.parseColorCode;
 import static seedu.address.logic.parser.ParserUtil.parseEventName;
+import static seedu.address.logic.parser.ParserUtil.parseEventScheduleView;
+import static seedu.address.logic.parser.ParserUtil.parseLocalDate;
 import static seedu.address.logic.parser.ParserUtil.parseLocalDateTime;
 import static seedu.address.logic.parser.ParserUtil.parseRecurrenceType;
 
@@ -32,6 +34,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.event.EventAddCommand;
 import seedu.address.logic.commands.event.EventCommand;
+import seedu.address.logic.commands.event.EventViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
@@ -76,16 +79,18 @@ public class EventCommandParser implements Parser<EventCommand> {
             logger.info("Parser unable to parse preamble index.");
             throw new ParseException("LOL");
         }
-        /*if (argMultimap.getValue(PREFIX_VIEW).isPresent()) {
+        if (argMultimap.getValue(PREFIX_VIEW).isPresent()) {
             return viewCommand(argMultimap);
-        } else if (argMultimap.getValue(PREFIX_DELETE).isPresent()) {
+        } else {
+        /*} else if (argMultimap.getValue(PREFIX_DELETE).isPresent()) {
             return deleteCommand(argMultimap);
         } else if (argMultimap.getValue(PREFIX_GET_INDEX).isPresent()) {
             return indexOfCommand(argMultimap);
         } else if (isEdit) {
             return editCommand(index, argMultimap);
         } else {*/
-        return addCommand(argMultimap);
+            return addCommand(argMultimap);
+        }
     }
 
     /**
@@ -120,6 +125,17 @@ public class EventCommandParser implements Parser<EventCommand> {
                 .withUniqueIdentifier(uniqueIdentifier);
 
         return new EventAddCommand(vEvent);
+    }
+
+    public EventViewCommand viewCommand(ArgumentMultimap argMultimap) throws ParseException{
+        EventViewCommand eventViewCommand = new EventViewCommand();
+        if (argMultimap.getValue(PREFIX_VIEW).isPresent()) {
+            eventViewCommand.setViewMode(parseEventScheduleView(argMultimap.getValue(PREFIX_VIEW).get()));
+        }
+        if (argMultimap.getValue(PREFIX_VIEW_DATE).isPresent()) {
+            eventViewCommand.setTargetViewDate(parseLocalDate(argMultimap.getValue(PREFIX_VIEW_DATE).get()));
+        }
+        return eventViewCommand;
     }
 
 }

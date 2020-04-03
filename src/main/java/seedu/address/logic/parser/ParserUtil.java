@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COLOR_STRING;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_RECURRENCE_TYPE;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_VIEW_MODE;
 import static seedu.address.commons.util.EventUtil.BAD_DATE_FORMAT;
 import static seedu.address.commons.util.EventUtil.DAILY_RECUR_RULE;
 import static seedu.address.commons.util.EventUtil.NO_RECUR_RULE;
@@ -23,6 +24,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.EventScheduleView;
 import seedu.address.model.event.RecurrenceType;
 import seedu.address.model.student.Address;
 import seedu.address.model.student.Attendance;
@@ -300,6 +302,23 @@ public class ParserUtil {
             return result;
         } catch (NumberFormatException e) {
             return false;
+        }
+    }
+
+    /**
+     * Changes view to the recur type
+     */
+    public static EventScheduleView parseEventScheduleView(String view) throws ParseException {
+        if (view.equals("")) {
+            return EventScheduleView.DAILY;
+        }
+        if (view.equalsIgnoreCase(EventScheduleView.WEEKLY.name())) {
+            return EventScheduleView.WEEKLY;
+        } else if (view.equalsIgnoreCase(EventScheduleView.DAILY.name())) {
+            return EventScheduleView.DAILY;
+
+        } else  {
+            throw new ParseException(MESSAGE_INVALID_VIEW_MODE);
         }
     }
 }

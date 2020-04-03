@@ -39,7 +39,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_RECUR = new Prefix("recur/");
     public static final Prefix PREFIX_COLOR = new Prefix("color/");
     public static final Prefix PREFIX_GET_INDEX = new Prefix("index/");
-    public static final Prefix PREFIX_VIEW_MODE = new Prefix("scheduleMode/");
+    public static final Prefix PREFIX_VIEW_MODE = new Prefix("mode/");
     public static final Prefix PREFIX_DELETE = new Prefix("delete");
 
 

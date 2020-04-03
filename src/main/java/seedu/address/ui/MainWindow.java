@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.admin.exceptions.DateNotFoundException;
 import seedu.address.model.admin.exceptions.DuplicateDateException;
+import seedu.address.model.event.EventScheduleView;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
 import seedu.address.ui.academics.AcademicsPanel;
 import seedu.address.ui.admin.DateListPanel;
@@ -191,6 +192,11 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleSchedule() {
         schedulePanel.update();
+        if (logic.getEventScheduleView().equals(EventScheduleView.DAILY)) {
+            schedulePanel.setDailySkin();
+        } else if (logic.getEventScheduleView().equals(EventScheduleView.WEEKLY)) {
+            schedulePanel.setWeeklySkin();
+        }
         schedulePanel.setDisplayedDateTime(logic.getEventScheduleLocalDateTime());
         schedulePanel.getRoot().toFront();
     }
